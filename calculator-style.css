@@ -13,6 +13,9 @@ body {
   border-radius: 2rem;
 
   padding: 2rem 1rem 1rem 1rem;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .calculator-display-box {
@@ -51,4 +54,24 @@ body {
   font-size: 3rem;
   font-weight: 500;
   color: rgb(44, 44, 44);
+}
+
+.calculator-buttons {
+  flex: 3;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.calculator-miscellenous-button {
+  flex: 1;
+  background-color: aqua;
+
+  display: flex;
+  flex-direction: row;
+}
+
+.calculator-number-operator-button {
+  flex: 3;
+  background-color: red;
 }
