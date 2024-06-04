@@ -35,6 +35,8 @@ function handleKeyDown(event) {
     ? displayNumber(event.key)
     : event.key === "Enter"
     ? displayNumber(event.key)
+    : event.key === "Backspace"
+    ? displayNumber(event.key)
     : "";
 }
 
@@ -52,11 +54,24 @@ function checkmaxNumber(numbersString) {
 }
 
 function checkPressedKey(numbersString, eventKey) {
-  console.log(eventKey);
-  if (eventKey !== "Enter") {
+  if (eventKey !== "Enter" && eventKey !== "Backspace") {
     numbersString += eventKey;
     globalNumbersString = numbersString;
-  } else if (eventKey === "Enter") {
-    globalNumbersString = eval(numbersString).toFixed(2);
+  } else if (eventKey === "Enter" && numbersString !== "") {
+    document.querySelector(
+      "#js-temporary-number"
+    ).innerHTML = `${numbersString}=`;
+    document.querySelector("#js-main-number").innerHTML = "";
+    let result =
+      eval(numbersString).toFixed(2) % 1 == 0
+        ? Math.round(eval(numbersString))
+        : eval(numbersString).toFixed(2);
+    globalNumbersString = result;
+  } else if (eventKey === "Backspace" && globalNumbersString !== "") {
+    globalNumbersString = globalNumbersString.toString();
+    globalNumbersString = globalNumbersString.substring(
+      0,
+      globalNumbersString.length - 1
+    );
   }
 }
