@@ -1,6 +1,16 @@
-document.addEventListener("keydown", handleKeyDown);
+
 let globalNumbersString = "";
 let maxString = "";
+document.addEventListener("keydown", handleKeyDown);
+
+const miscelleneaousButtons = ["CE", "C", "&#x2190"];
+const numericButtons = ["7", "8", "9", "4", "5", "6" ,"1", "2", "3", "0",".", "="];
+const operatorButtons = ["/","*", "-", "+"];
+
+displaymiscButtons();
+displaynumericButtons();
+displayOperatorButtons();
+
 
 function handleKeyDown(event) {
   event.key === "1"
@@ -75,3 +85,31 @@ function checkPressedKey(numbersString, eventKey) {
     );
   }
 }
+
+function displaymiscButtons(){
+  let buttonsElem = document.querySelector(".calculator-miscellenous-button");
+  let buttonsHtml = "";
+  miscelleneaousButtons.forEach((item)=>{
+    buttonsHtml += `<div class="miscelleneaous-buttons">${item}</div>`
+  })
+  buttonsElem.innerHTML = buttonsHtml;
+}
+
+function displaynumericButtons(){
+  let buttonsElem = document.querySelector(".calculator-numeric-buttons");
+  let buttonsHtml = "";
+  numericButtons.forEach((item)=>{
+  buttonsHtml += `<div class="numeric-buttons">${item}</div>`
+  })
+  buttonsElem.innerHTML = buttonsHtml;
+}
+
+function displayOperatorButtons(){
+  let buttonsElem = document.querySelector(".calculator-operator-buttons");
+  let buttonsHtml = "";
+  operatorButtons.forEach((item)=>{
+  buttonsHtml += `<div class="operator-buttons">${item}</div>`
+  })
+  buttonsElem.innerHTML = buttonsHtml;
+}
+
