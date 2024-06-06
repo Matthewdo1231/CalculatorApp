@@ -47,7 +47,7 @@ function handleKeyDown(event) {
     ? displayNumber(event.key)
     : event.key === "Backspace"
     ? displayNumber(event.key)
-    : "";
+    : null;
 }
 
 function displayNumber(eventKey) {
@@ -64,9 +64,10 @@ function checkmaxNumber(numbersString) {
 }
 
 function checkPressedKey(numbersString, eventKey) {
-  if (eventKey !== "Enter" && eventKey !== "Backspace") {
+  if (eventKey !== "Enter" && eventKey !== "Backspace" && eventKey!== "←") {
     numbersString += eventKey;
     globalNumbersString = numbersString;
+
   } else if (eventKey === "Enter" && numbersString !== "") {
     document.querySelector(
       "#js-temporary-number"
@@ -74,42 +75,61 @@ function checkPressedKey(numbersString, eventKey) {
     document.querySelector("#js-main-number").innerHTML = "";
     let result =
       eval(numbersString).toFixed(2) % 1 == 0
-        ? Math.round(eval(numbersString))
+        ? Math.round(eval(numbersString)) 
         : eval(numbersString).toFixed(2);
     globalNumbersString = result;
-  } else if (eventKey === "Backspace" && globalNumbersString !== "") {
+
+  } 
+  else if ((eventKey ==="Backspace" && globalNumbersString !== "")||(eventKey ==="←" && globalNumbersString !== "")) {
     globalNumbersString = globalNumbersString.toString();
     globalNumbersString = globalNumbersString.substring(
       0,
       globalNumbersString.length - 1
     );
   }
+
 }
 
 function displaymiscButtons(){
   let buttonsElem = document.querySelector(".calculator-miscellenous-button");
   let buttonsHtml = "";
   miscelleneaousButtons.forEach((item)=>{
-    buttonsHtml += `<div class="miscelleneaous-buttons">${item}</div>`
+    buttonsHtml += `<div class="miscelleneaous-buttons" id="misc-button-${item}" data-button-pressed="${item}">${item}</div>`
   })
   buttonsElem.innerHTML = buttonsHtml;
+  document.querySelectorAll(".miscelleneaous-buttons").forEach((element)=>{
+      element.addEventListener("click",()=>{mouseClickButtonStyle(element)})
+  })
 }
 
 function displaynumericButtons(){
   let buttonsElem = document.querySelector(".calculator-numeric-buttons");
   let buttonsHtml = "";
   numericButtons.forEach((item)=>{
-  buttonsHtml += `<div class="numeric-buttons">${item}</div>`
+  buttonsHtml += `<div class="numeric-buttons" id="numeric-button-${item}" data-button-pressed="${item}">${item}</div>`
   })
   buttonsElem.innerHTML = buttonsHtml;
+  document.querySelectorAll(".numeric-buttons").forEach((element)=>{
+  element.addEventListener("click",()=>{mouseClickButtonStyle(element)})
+})
 }
 
-function displayOperatorButtons(){
+function displayOperatorButtons(){  
   let buttonsElem = document.querySelector(".calculator-operator-buttons");
   let buttonsHtml = "";
   operatorButtons.forEach((item)=>{
-  buttonsHtml += `<div class="operator-buttons">${item}</div>`
+  buttonsHtml += `<div class="operator-buttons" id="operator-button-${item}" data-button-pressed="${item}">${item}</div>`
   })
   buttonsElem.innerHTML = buttonsHtml;
+  document.querySelectorAll(".operator-buttons").forEach((element)=>{
+  element.addEventListener("click",()=>{mouseClickButtonStyle(element)})
+  })
 }
 
+function mouseClickButtonStyle(element){
+  element.classList.add("button-pressed");
+  setTimeout(()=>{element.classList.remove("button-pressed")},100)
+  //Get the element attribute and display
+  let buttonClicked = element.getAttribute('data-button-pressed'); 
+  displayNumber(buttonClicked)
+}
